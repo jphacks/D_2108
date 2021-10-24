@@ -1,9 +1,9 @@
 <template>
   <div>
-    <p>部屋名</p>
+    <p>{{ roomname }}</p>
     <div>
       <p>名前</p>
-      <input>
+      <input />
     </div>
     <button>オフライン参加</button>
     <button>オンライン参加</button>
@@ -11,5 +11,11 @@
 </template>
 
 <script>
-export default {}
+export default {
+  data() {
+    return {
+      roomname: '部屋名',
+    }
+  },
+}
 </script>
