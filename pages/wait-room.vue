@@ -2,8 +2,8 @@
   <div>
     <p>オフライン</p>
     <div class="flex space-x-4 ...">
-      <p>url</p>
-      <button>コピー</button>
+      <p>{{url}}</p>
+      <button @click="copyUrlToClipboard(url)">コピー</button>
       <button>QRコード</button>
     </div>
     <div>
@@ -28,5 +28,18 @@
 </template>
 
 <script>
-export default {}
+export default {
+  data(){
+    return{
+      url:"http://localhost:3000/wait-room"
+    }
+  },
+  methods:{
+    copyUrlToClipboard(text){
+      navigator.clipboard.writeText(text).catch((e)=>{
+
+      });
+    }
+  }
+}
 </script>
