@@ -17,5 +17,11 @@ export default {
       roomname: '部屋名',
     }
   },
+  methods: {
+    // 部屋名を取得する
+    getRoomName() {},
+    // 部屋にログインする
+    loginRoom() {},
+  },
 }
 </script>
