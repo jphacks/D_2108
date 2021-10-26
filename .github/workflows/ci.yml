@@ -39,9 +39,12 @@ jobs:
 
       - name: Install dependencies 👨🏻‍💻
         run: npm ci --prefer-offline --no-audit
+        working-directory: front
 
       - name: Run linter 👀
         run: npm run lint
+        working-directory: front
 
       - name: Run tests 🧪
         run: npm run test
+        working-directory: front
