@@ -2,7 +2,7 @@
   <div>
     <p>{{ roomname }}</p>
     <div>
-      <p>名前</p>
+      <p>名前hogehoge</p>
       <input />
     </div>
     <button>オフライン参加</button>
