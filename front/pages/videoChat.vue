@@ -18,7 +18,7 @@ if (process.browser) {
 export default {
   name: 'Helloworld',
 
-  mounted() {
+  mounted({$config}) {
       
     const client = AgoraRTC.createClient({
       mode: "rtc",
@@ -32,7 +32,7 @@ export default {
     });
     console.log('====init====');
     client.init($config.appID);
-console.log('====join====')
+    console.log('====join====')
     client.join($config.token, 0, null, ()=>{
       localStream.init(()=>{
       localStream.play("me");
