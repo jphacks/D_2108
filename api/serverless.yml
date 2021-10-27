@@ -1,0 +1,83 @@
+service: offtoon-sls
+frameworkVersion: "2"
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: ap-northeast-1
+  lambdaHashingVersion: 20201221
+  stage: dev
+  environment:
+    DYNAMODB_TABLE: UserRoom
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: "arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}*"
+
+package:
+  individually: true
+
+functions:
+  getAll:
+    handler: handler.getAll
+    environment:
+      tableName: UserRoomTable
+    events:
+      - http: GET all
+  getRoom:
+    handler: handler.getRoom
+    environment:
+      tableName: UserRoomTable
+    events:
+      - http: GET room
+  test:
+    handler: handler.test
+    events:
+      - http: POST test
+  createRoom:
+    handler: handler.createRoom
+    environment:
+      tableName: UserRoomTable
+    events:
+      - http: POST room
+        cors: true
+
+resources:
+  Resources:
+    UserRoomTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:provider.environment.DYNAMODB_TABLE}Table
+        AttributeDefinitions:
+          - AttributeName: RoomId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: RoomId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+
+plugins:
+  - serverless-dynamodb-local
+  - serverless-offline
+
+custom:
+  dynamodb:
+    stages: dev
+    start:
+      port: 8000
+      inMemory: true
+      migrate: true
+      seed: true
+    seed:
+      test:
+        sources:
+          - table: UserRoomTable
+            sources: [./seeds/test.json]
