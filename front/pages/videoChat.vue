@@ -31,9 +31,9 @@ export default {
       video: true,
     });
     console.log('====init====');
-    client.init("e66dcfca003b4eccb2cb83c6cdc12c66");
+    client.init($config.appID);
 console.log('====join====')
-    client.join("006e66dcfca003b4eccb2cb83c6cdc12c66IADE4CCviOyL2LAfA8Gh0nlOX7D+5mLmyLwIz8x2E0yos9m7NfgAAAAAEACcPzRR/op5YQEAAQD+inlh", 0, null, ()=>{
+    client.join($config.token, 0, null, ()=>{
       localStream.init(()=>{
       localStream.play("me");
       client.publish(localStream, handleError);

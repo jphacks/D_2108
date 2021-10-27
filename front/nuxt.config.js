@@ -46,5 +46,10 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+  },
+
+  privateRuntimeConfig: {
+    appID: process.env.APP_ID,
+    token: process.env.TOKEN
   }
 }
