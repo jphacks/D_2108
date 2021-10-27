@@ -9,7 +9,6 @@
     <div id="container"></div>
   </div>
 </template>
-
 <script>
 let AgoraRTC;
 if (process.browser) {
@@ -17,15 +16,12 @@ if (process.browser) {
 }
 export default {
   name: 'Helloworld',
-
   mounted({$config}) {
-      
     const client = AgoraRTC.createClient({
       mode: "rtc",
       codec: "vp8",
     });
     console.log("AgoraRTC = "+AgoraRTC);
-
     const localStream = AgoraRTC.createStream({
       audio: true,
       video: true,
@@ -62,27 +58,22 @@ export default {
     }, handleError);
   }
 }
-
 const handleError = function(err){
   console.log("Error: ", err);
 };
-
 function addVideoStream(elementId){
   const streamDiv = document.createElement("div");
   streamDiv.id = elementId;
   streamDiv.style.transform = "rotateY(180deg)";
   streamDiv.style.width = "400px";
   streamDiv.style.height = "400px";
-
   document.getElementById("container").appendChild(streamDiv);
 }
-
 function removeVideoStream(elementId) {
   const remoteDiv = document.getElementById(elementId);
   if (remoteDiv) remoteDiv.parentNode.removeChild(remoteDiv);
 }
 </script>
-
 <style scoped>
 * {
   font-family: sans-serif;
@@ -101,5 +92,4 @@ h1,h4 {
 #container video {
   position: relative !important;
 }
-
 </style>
