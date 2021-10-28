@@ -165,20 +165,49 @@ module.exports.getRoomInfo = async event => {
 
 /**
  * 
-  test
-  POST /test
-  テスト用関数
+  addUser
+  PUT /user
+  既存の部屋にユーザーを追加
 */
-module.exports.test = async event => {
-  const { RoomName, UserName } = JSON.parse(event.body);
-  // const UserName = event.body.UserName;
-  // const resultUserName = event.body.UserName;
+module.exports.addUser = async event => {
+  const { RoomId, UserName, AttendStatus } = JSON.parse(event.body);
+
+  const newUser = [{
+   "UserName": UserName,
+   "AttendStatus": AttendStatus, 
+   "ConnectStatus": false,
+  }]
+
   const params = {
-    "RoomName": RoomName,
-    "UserName": UserName
+    TableName: tableName,
+    Key: {
+      "RoomId": RoomId,
+    },
+    ExpressionAttributeNames: {
+      '#users': 'Users',
+    },
+    ExpressionAttributeValues: {
+      ':newUser': newUser,
+      ':RoomId': RoomId
+    },
+    UpdateExpression: 'SET #users = list_append(#users, :newUser)',
+    ConditionExpression: 'RoomId = :RoomId'
   }
-  return {
-    statusCode: 200,
-    body: JSON.stringify(params)
-  };
+
+  try {
+    const result = await dynamo.update(params).promise();
+    return {
+      statusCode: 200,
+      headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': true,
+      },
+      body: JSON.stringify(result)
+    };
+  } catch (error) {
+    return {
+      statusCode: error.statusCode,
+      body: error.message
+    }
+  }
 };

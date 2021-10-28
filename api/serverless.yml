@@ -38,10 +38,6 @@ functions:
       tableName: UserRoomTable
     events:
       - http: GET room
-  test:
-    handler: handler.test
-    events:
-      - http: POST test
   createRoom:
     handler: handler.createRoom
     environment:
@@ -54,6 +50,12 @@ functions:
       tableName: UserRoomTable
     events:
       - http: GET users
+  addUser:
+    handler: handler.addUser
+    environment:
+      tableName: UserRoomTable
+    events:
+      - http: PUT users
 
 resources:
   Resources:
