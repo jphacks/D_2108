@@ -16,8 +16,6 @@ export default {
   modules: [
     // Using package name
     '@nuxtjs/axios',
-    // Inline definition
-    function () {},
   ],
 
   data() {
@@ -42,7 +40,9 @@ export default {
       }
     },
     // 部屋にログインする
-    loginRoom() {},
+    loginRoom() {
+      return status
+    },
   },
 }
 </script>
