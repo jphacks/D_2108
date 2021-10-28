@@ -1,27 +1,24 @@
 [
     {
-        "RoomId": 1,
+        "RoomId": "1234nine",
         "RoomName": "nineの部屋",
         "Users": [{
             "UserName": "nine",
             "ConnectStatus": false,
-            "ConnectUserName": "",
             "AttendStatus": true 
         },
         {
             "UserName": "itoka",
             "ConnectStatus": false,
-            "ConnectUserName": "",
             "AttendStatus": false 
         }]
     },
     {
-        "RoomId": 2,
+        "RoomId": "2345wat",
         "RoomName": "わっとそーん",
         "Users": [{
             "UserName": "わとそん",
             "ConnectStatus": false,
-            "ConnectUserName": "",
             "AttendStatus": false 
         }]
     }
