@@ -19,6 +19,8 @@ provider:
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
       Resource: "arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}*"
+  httpApi:
+    cors: true
 
 package:
   individually: true
@@ -46,7 +48,12 @@ functions:
       tableName: UserRoomTable
     events:
       - http: POST room
-        cors: true
+  getRoomInfo:
+    handler: handler.getRoomInfo
+    environment:
+      tableName: UserRoomTable
+    events:
+      - http: GET users
 
 resources:
   Resources:
