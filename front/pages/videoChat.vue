@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <h1>
-      Video Call<br /><small style="font-size: 14pt">Powered by Agora.io</small>
+      Video Call<br><small style="font-size: 14pt;">Powered by Agora.io</small>
     </h1>
     <h4>Local video</h4>
     <div id="me"></div>
@@ -9,6 +9,7 @@
     <div id="container"></div>
   </div>
 </template>
+
 <script>
 let AgoraRTC;
 if (process.browser) {
@@ -77,12 +78,12 @@ function removeVideoStream(elementId) {
   if (remoteDiv) remoteDiv.parentNode.removeChild(remoteDiv)
 }
 </script>
+
 <style scoped>
 * {
   font-family: sans-serif;
 }
-h1,
-h4 {
+h1, h4 {
   text-align: center;
 }
 #me {
