@@ -12,6 +12,15 @@ const dynamo = new AWS.DynamoDB.DocumentClient();
 // const dynamo = new AWS.DynamoDB.DocumentClient();
 const tableName = process.env.tableName;
 
+
+
+/**
+ * 
+  getAll
+  GET /all
+  引数: なし
+  返り値: RoomId, RoomName, Users
+*/
 module.exports.getAll = async () => {
   const params = {
     TableName: tableName
@@ -21,6 +30,10 @@ module.exports.getAll = async () => {
     const result = await dynamo.scan(params).promise();
     return {
       statusCode: 200,
+      headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': true,
+      },
       body: JSON.stringify(result.Items)
     };
   } catch (error) {
@@ -31,6 +44,14 @@ module.exports.getAll = async () => {
   }
 };
 
+
+/**
+ * 
+  getRoom
+  POST /room
+  引数: RoomName, UserName
+  返り値: RoomId
+*/
 module.exports.getRoom = async event => {
   const { RoomId } = event.queryStringParameters;
 
@@ -45,6 +66,10 @@ module.exports.getRoom = async event => {
     const result = await dynamo.get(params).promise();
     return {
       statusCode: 200,
+      headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': true,
+      },
       body: JSON.stringify(result.Item)
     };
   } catch (error) {
@@ -55,17 +80,30 @@ module.exports.getRoom = async event => {
   }
 };
 
+
+/**
+ * 
+  createRoom
+  GET /room
+  引数: RoomName, UserName
+  返り値: RoomId
+*/
 module.exports.createRoom = async event => {
   const { RoomName, UserName } = JSON.parse(event.body);
   const { v4: uuidv4 } = require('uuid');
   const RoomId = uuidv4();
+  const Users = [{
+    "AttendStatus": true,
+    "ConnectStatus": false,
+    "UserName": UserName
+  }];
 
   const params = {
     TableName: tableName,
     Item: {
-      "UserName": UserName,
+      "RoomId": RoomId,
       "RoomName": RoomName,
-      "RoomId": RoomId
+      "Users" : Users
     }
   }
 
@@ -73,7 +111,11 @@ module.exports.createRoom = async event => {
     const result = await dynamo.put(params).promise();
     return {
       statusCode: 200,
-      body: JSON.stringify(result.Item)
+      headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': true,
+      },
+      body: JSON.stringify(result.Item.RoomId)
     };
   } catch (error) {
     return {
@@ -83,6 +125,50 @@ module.exports.createRoom = async event => {
   }
 };
 
+
+/**
+ * 
+  getRoomInfo
+  GET /info
+  引数: RoomId
+  返り値: [{UserName, AttendStatus, ConnectStatus}]
+*/
+module.exports.getRoomInfo = async event => {
+  const { RoomId } = event.queryStringParameters;
+
+  const params = {
+    TableName: tableName,
+    Key: {
+      "RoomId": RoomId,
+    }
+  };
+
+  try {
+    const result = await dynamo.get(params).promise();
+    // const resultItem = JSON.stringify(result.Item).Users;
+    return {
+      statusCode: 200,
+      headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': true,
+      },
+      body: JSON.stringify(result.Item.Users)
+    };
+  } catch (error) {
+    return {
+      statusCode: error.statusCode,
+      body: error.message
+    }
+  }
+};
+
+
+/**
+ * 
+  test
+  POST /test
+  テスト用関数
+*/
 module.exports.test = async event => {
   const { RoomName, UserName } = JSON.parse(event.body);
   // const UserName = event.body.UserName;
