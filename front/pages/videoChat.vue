@@ -26,11 +26,11 @@ export default {
       audio: true,
       video: true,
     })
-    client.init(process.env.appID)
+    client.init(process.env.APP_ID)
     client.join(
-      process.env.token,
-      0,
-      null,
+      process.env.TOKEN,
+      process.env.CHANNEL_NAME,
+      1,
       () => {
         localStream.init(() => {
           localStream.play('me')
