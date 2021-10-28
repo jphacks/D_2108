@@ -63,7 +63,7 @@ export default {
   },
 }
 const handleError = function (err) {
-  console.log('Error: ', err)
+  alert('Error: ', err)
 }
 function addVideoStream(elementId) {
   const streamDiv = document.createElement('div')
