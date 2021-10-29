@@ -171,11 +171,14 @@ module.exports.getRoomInfo = async event => {
 */
 module.exports.addUser = async event => {
   const { RoomId, UserName, AttendStatus } = JSON.parse(event.body);
+  const { v4: uuidv4 } = require('uuid');
+  const userId = uuidv4();
 
   const newUser = [{
-   "UserName": UserName,
-   "AttendStatus": AttendStatus, 
-   "ConnectStatus": false,
+    "UserId": userId,
+    "UserName": UserName,
+    "AttendStatus": AttendStatus, 
+    "ConnectStatus": false,
   }]
 
   const params = {
