@@ -171,11 +171,14 @@ module.exports.getRoomInfo = async event => {
 */
 module.exports.addUser = async event => {
   const { RoomId, UserName, AttendStatus } = JSON.parse(event.body);
+  const { v4: uuidv4 } = require('uuid');
+  const userId = uuidv4();
 
   const newUser = [{
-   "UserName": UserName,
-   "AttendStatus": AttendStatus, 
-   "ConnectStatus": false,
+    "UserId": userId,
+    "UserName": UserName,
+    "AttendStatus": AttendStatus, 
+    "ConnectStatus": false,
   }]
 
   const params = {
@@ -195,7 +198,10 @@ module.exports.addUser = async event => {
   }
 
   try {
-    const result = await dynamo.update(params).promise();
+    await dynamo.update(params).promise();
+    const newUserId = {
+      "UserId": userId
+    };
     return {
       statusCode: 200,
       headers: {
@@ -203,7 +209,7 @@ module.exports.addUser = async event => {
       'Access-Controll-Allow-Methods': "PUT",
       'Access-Controll-Allow-Headers': "Content-Type",
       },
-      body: JSON.stringify(result)
+      body: JSON.stringify(newUserId)
     };
   } catch (error) {
     return {

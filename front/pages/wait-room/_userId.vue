@@ -41,8 +41,8 @@ export default {
     }
   },
   created() {
-    this.url = 'http://localhost:3000/login-room?id=' + this.$route.query.id
-    this.getRoomUsers(this.$route.query.id)
+    this.url = 'http://localhost:3000/login-room/' + this.$route.query.roomId
+    this.getRoomUsers(this.$route.query.roomId)
   },
   methods: {
     // 入室用URLをクリップボードにコピー
