@@ -31,7 +31,7 @@ export default {
     }
   },
   async created() {
-    // await this.getRoomName(this.$route.params.roomId);
+    await this.getRoomName(this.$route.params.roomId);
   },
   methods: {
     // 部屋名を取得する
@@ -56,12 +56,12 @@ export default {
     // 部屋にログインする
     async loginRoom(roomId, userName, attendStatus) {
       try {
-        await this.$axios.$put(process.env.NUXT_ENV_ADD_USER_URL, {
+        const response = await this.$axios.$put(process.env.NUXT_ENV_ADD_USER_URL, {
           RoomId: roomId,
           UserName: userName,
           AttendStatus: attendStatus,
-        })
-        this.toWaitRoom()
+        });
+        this.toWaitRoom(response);
       } catch (error) {
         return {
           statusCode: error,
@@ -84,8 +84,9 @@ export default {
     },
     toWaitRoom(userId) {
       this.$router.push({
-        name: 'wait-room',
-        params: { userId }
+        name: 'wait-room-userId',
+        params: { userId },
+        query: { roomId: this.$route.params.roomId }
       })
     },
   },
