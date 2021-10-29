@@ -52,9 +52,12 @@ export default {
     // 入室しているUserのパラメータを取得
     async getRoomUsers(roomId) {
       try {
-        const responce = await this.$axios.$get(process.env.GET_ROOMUSERS_URL, {
-          params: { RoomId: roomId },
-        })
+        const responce = await this.$axios.$get(
+          process.env.NUXT_ENV_GET_ROOMUSERS_URL,
+          {
+            params: { RoomId: roomId },
+          }
+        )
         this.users = responce.Users
       } catch (error) {
         alert(error)
