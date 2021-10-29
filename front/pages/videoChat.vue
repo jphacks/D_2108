@@ -22,7 +22,7 @@ export default {
       mode: 'rtc',
       codec: 'vp8',
     })
-     const localStream = AgoraRTC.createStream({
+    const localStream = AgoraRTC.createStream({
       audio: true,
       video: true,
     })
@@ -62,7 +62,7 @@ export default {
     )
   },
 }
- const handleError = function (err) {
+const handleError = function (err) {
   alert('Error: ', err)
 }
 function addVideoStream(elementId) {
