@@ -22,23 +22,23 @@ export default {
       mode: 'rtc',
       codec: 'vp8',
     })
-    const localStream = AgoraRTC.createStream({
+     const localStream = AgoraRTC.createStream({
       audio: true,
       video: true,
-    })
+    }) 
     client.init(process.env.APP_ID)
     client.join(
       process.env.TOKEN,
-      process.env.CHANNEL_NAME,
-      1,
+      process.env.CHANNEL,
+      Math.floor(Math.random() * 256),
       () => {
         localStream.init(() => {
-          localStream.play('me')
+          localStream.play('me') 
           client.publish(localStream, handleError)
         }, handleError)
         client.on('stream-added', function (evt) {
           client.subscribe(evt.stream, handleError)
-        })
+        }) 
         client.on('stream-subscribed', function (evt) {
           const stream = evt.stream
           const streamId = String(stream.getId())
@@ -56,13 +56,13 @@ export default {
           const streamId = String(stream.getId())
           stream.close()
           removeVideoStream(streamId)
-        })
+        }) 
       },
       handleError
     )
   },
 }
-const handleError = function (err) {
+ const handleError = function (err) {
   alert('Error: ', err)
 }
 function addVideoStream(elementId) {
@@ -76,7 +76,7 @@ function addVideoStream(elementId) {
 function removeVideoStream(elementId) {
   const remoteDiv = document.getElementById(elementId)
   if (remoteDiv) remoteDiv.parentNode.removeChild(remoteDiv)
-}
+} 
 </script>
 
 <style scoped>
