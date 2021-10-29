@@ -56,6 +56,12 @@ functions:
       tableName: UserRoomTable
     events:
       - http: PUT users
+  createConnect:
+    handler: handler.createConnect
+    environment:
+      tableName: UserRoomTable
+    events:
+      - http: PUT connect
 
 resources:
   Resources:

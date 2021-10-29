@@ -166,7 +166,7 @@ module.exports.getRoomInfo = async event => {
 /**
  * 
   addUser
-  PUT /user
+  PUT /users
   既存の部屋にユーザーを追加
 */
 module.exports.addUser = async event => {
@@ -200,6 +200,45 @@ module.exports.addUser = async event => {
       statusCode: 200,
       headers: {
       'Access-Control-Allow-Origin': '*',
+      'Access-Controll-Allow-Methods': "PUT",
+      'Access-Controll-Allow-Headers': "Content-Type",
+      },
+      body: JSON.stringify(result)
+    };
+  } catch (error) {
+    return {
+      statusCode: error.statusCode,
+      body: error.message
+    }
+  }
+};
+
+
+/**
+ * 
+  createConect
+  PUT /connect
+  接続状態の設定
+*/
+module.exports.createConnect = async event => {
+  const { RoomId, UserId, connectToUserId } = JSON.parse(event.body);
+  const users = [UserId, connectToUserId];
+
+  const getUserDataParams = {
+    TableName: tableName,
+    Key: {
+      "RoomId": RoomId
+    }
+  }
+
+  try {
+    const roomData = await dynamo.get(getUserDataParams).promise();
+    const params = updateUserData(roomData.Item.Users, users);
+    const result = await dynamo.update(params).promise();
+    return {
+      statusCode: 200,
+      headers: {
+      'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Credentials': true,
       },
       body: JSON.stringify(result)
@@ -209,5 +248,53 @@ module.exports.addUser = async event => {
       statusCode: error.statusCode,
       body: error.message
     }
+  }
+
+  function updateUserData(usersData, users) {
+    for(const i of users) {
+      const userData = usersData.find(data => data.UserId == i);
+
+      if(userData === undefined) {
+        throw '存在しないユーザーです'
+      }
+
+      if(userData.ConnectStatus) {
+        throw '接続できません'
+      }
+
+      userData.ConnectStatus = !userData.ConnectStatus;
+      let settingUser = {
+       "UserId": i,
+       "UserName": userData.UserName,
+       "AttendStatus": userData.AttendStatus, 
+       "ConnectStatus": userData.ConnectStatus,
+      };
+      usersData.unshift(settingUser);
+    }
+
+    let newUsersData = usersData.filter((element, index, self) =>
+                        self.findIndex(e =>
+                          e.UserId === element.UserId
+                          ) === index
+                        );
+
+    const params = {
+      TableName: tableName,
+      Key: {
+        "RoomId": RoomId,
+      },
+      ExpressionAttributeNames: {
+        '#users': 'Users',
+      },
+      ExpressionAttributeValues: {
+        ':newUsersData': newUsersData,
+        ':RoomId': RoomId
+      },
+      UpdateExpression: 'SET #users = :newUsersData',
+      ConditionExpression: 'RoomId = :RoomId',
+      ReturnValues: 'ALL_NEW'
+    }
+
+    return params;
   }
 };
