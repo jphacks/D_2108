@@ -198,7 +198,10 @@ module.exports.addUser = async event => {
   }
 
   try {
-    const result = await dynamo.update(params).promise();
+    await dynamo.update(params).promise();
+    const newUserId = {
+      "UserId": userId
+    };
     return {
       statusCode: 200,
       headers: {
@@ -206,7 +209,7 @@ module.exports.addUser = async event => {
       'Access-Controll-Allow-Methods': "PUT",
       'Access-Controll-Allow-Headers': "Content-Type",
       },
-      body: JSON.stringify(result)
+      body: JSON.stringify(newUserId)
     };
   } catch (error) {
     return {
