@@ -25,7 +25,7 @@ export default {
      const localStream = AgoraRTC.createStream({
       audio: true,
       video: true,
-    }) 
+    })
     client.init(process.env.APP_ID)
     client.join(
       process.env.TOKEN,
@@ -33,12 +33,12 @@ export default {
       Math.floor(Math.random() * 256),
       () => {
         localStream.init(() => {
-          localStream.play('me') 
+          localStream.play('me')
           client.publish(localStream, handleError)
         }, handleError)
         client.on('stream-added', function (evt) {
           client.subscribe(evt.stream, handleError)
-        }) 
+        })
         client.on('stream-subscribed', function (evt) {
           const stream = evt.stream
           const streamId = String(stream.getId())
@@ -56,7 +56,7 @@ export default {
           const streamId = String(stream.getId())
           stream.close()
           removeVideoStream(streamId)
-        }) 
+        })
       },
       handleError
     )
@@ -76,7 +76,7 @@ function addVideoStream(elementId) {
 function removeVideoStream(elementId) {
   const remoteDiv = document.getElementById(elementId)
   if (remoteDiv) remoteDiv.parentNode.removeChild(remoteDiv)
-} 
+}
 </script>
 
 <style scoped>
