@@ -6,12 +6,19 @@
       <button @click="copyUrlToClipboard(url)">コピー</button>
       <button>QRコード</button>
     </div>
-    <div>
-      <off-user-block></off-user-block>
-      <on-user-block></on-user-block>
-    </div>
+    <ul>
+      <li v-for="user in users" :key="user.UserId">
+        <div>
+          <OnUserBlock
+            v-if="user.AttendStatus === true"
+            :name="user.UserName"
+          />
+          <OffUserBlock v-else :name="user.UserName" />
+        </div>
+      </li>
+    </ul>
     <button>終了</button>
-    <button>更新</button>
+    <button @click="getRoomUsers($route.query.id)">更新</button>
   </div>
 </template>
 
@@ -20,15 +27,38 @@ import OffUserBlock from '~/components/OffUserBlock.vue'
 import OnUserBlock from '~/components/OnUserBlock.vue'
 
 export default {
+  modules: [
+    // Using package name
+    '@nuxtjs/axios',
+    // Inline definition
+    function () {},
+  ],
   components: { OffUserBlock, OnUserBlock },
   data() {
     return {
-      url: 'http://localhost:3000/wait-room',
+      url: ``,
+      users: [],
     }
   },
+  created() {
+    this.url = 'http://localhost:3000/login-room?id=' + this.$route.query.id
+    this.getRoomUsers(this.$route.query.id)
+  },
   methods: {
+    // 入室用URLをクリップボードにコピー
     copyUrlToClipboard(text) {
       navigator.clipboard.writeText(text).catch((e) => {})
+    },
+    // 入室しているUserのパラメータを取得
+    async getRoomUsers(roomId) {
+      try {
+        const responce = await this.$axios.$get(process.env.GET_ROOMUSERS_URL, {
+          params: { RoomId: roomId },
+        })
+        this.users = responce.Users
+      } catch (error) {
+        alert(error)
+      }
     },
   },
 }
