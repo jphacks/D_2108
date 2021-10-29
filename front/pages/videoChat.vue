@@ -26,11 +26,11 @@ export default {
       audio: true,
       video: true,
     })
-    client.init(process.env.appID)
+    client.init(process.env.NUXT_ENV_APP_ID)
     client.join(
-      process.env.token,
-      0,
-      null,
+      process.env.NUXT_ENV_TOKEN,
+      process.env.NUXT_ENV_CHANNEL,
+      Math.floor(Math.random() * 256),
       () => {
         localStream.init(() => {
           localStream.play('me')
