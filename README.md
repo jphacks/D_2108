@@ -1,6 +1,6 @@
 # おんとおふ　On "to" off
 
-[![IMAGE ALT TEXT HERE](https://jphacks.com/wp-content/uploads/2021/07/JPHACKS2021_ogp.jpg)](https://www.youtube.com/watch?v=LUPQFB4QyVo)
+[![ontooff_title](https://user-images.githubusercontent.com/38809639/139520649-dd5fbc1b-99bf-41d1-962e-364a9426fe0c.png)](https://www.youtube.com/watch?v=LUPQFB4QyVo)
 
 ## 背景(製品開発のきっかけ、課題等)
 ## オフラインとオンラインが混在する活動の中で、オンラインの人に孤独感やもどかしさ、オフラインの人に煩わしさや面倒くささを感じさせてしまう状況を打開すべく開発しました。
@@ -23,10 +23,11 @@
 ## 開発技術
 ### 活用した技術
 #### API・データ
-* WebAudioAPI
+* AgoraWebSDKAPI
 
 #### フレームワーク・ライブラリ・モジュール
 * nuxt.js
+* TailwindCSS
 * AWS
 * Lambda
 * WebRTC
