@@ -4,7 +4,7 @@
       <img :src="image_src" :alt="image_alt" class="h-full">
     </div>
     <p class="flex-grow text-2xl text-left pl-4 pt-2">{{ userName }}</p>
-    <Button v-if="!connectStatus" text="接続" :color-code="colorCode" />
+    <Button v-if="!connectStatus && status" text="接続" :color-code="colorCode" />
   </div>
 </template>
 
@@ -33,7 +33,7 @@ export default {
   },
   computed: {
     colorCode() {
-      return this.status ? "#ffaf08" : "#0064b3";
+      return "#ffaf08";
     }
   }
 }

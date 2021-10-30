@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import videoChatVue from '../videoChat.vue';
 export default {
   modules: ['@nuxtjs/axios'],
 
@@ -61,7 +62,7 @@ export default {
           UserName: userName,
           AttendStatus: attendStatus,
         });
-        this.toWaitRoom(response);
+        this.toWaitRoom(response,attendStatus);
       } catch (error) {
         return {
           statusCode: error,
@@ -82,12 +83,19 @@ export default {
         this.loginRoom(roomId, userName, attendStatus);
       }
     },
-    toWaitRoom(userId) {
-      this.$router.push({
-        name: 'wait-room-userId',
-        params: { userId },
-        query: { roomId: this.$route.params.roomId, userName: this.userName }
-      })
+    toWaitRoom(userId, attendStatus) {
+      if(attendStatus) {
+        this.$router.push({
+          name: 'videoChat',
+          params: { userId }
+        })
+      } else {
+        this.$router.push({
+          name: 'wait-room-userId',
+          params: { userId },
+          query: { roomId: this.$route.params.roomId, userName: this.userName }
+        })
+      }
     },
   },
 }

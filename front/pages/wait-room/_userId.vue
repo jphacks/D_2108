@@ -4,10 +4,10 @@
     <p class="text-2xl user-name mx-8">{{ $route.query.userName }}</p>
     <div class="flex space-x-4 py-12">
       <input type="text" :value="url" onfocus="this.select();" class="border-4 url-text rounded-xl p-2 flex-grow">
-      <Button text="コピー" color-code="#58340e" @toggleButton="copyUrlToClipboard()" />
+      <Button text="コピー" color-code="#58340e" @toggleButton="copyUrlToClipboard" />
     </div>
     <div v-for="user in users" :key="user.UserId">
-      <UserCard :user-name="user.UserName" :status="user.AttendStatus" :connect-status="user.ConnectStatus" class="card-border mb-2" />
+      <UserCard :user-name="user.UserName" :status="user.AttendStatus" :connect-status="user.ConnectStatus" @toggleButton="connectToUser(user.UserId)" class="card-border mb-2" />
     </div>
     <button>終了</button>
     <button @click="getRoomUsers($route.query.id)">更新</button>
@@ -48,6 +48,13 @@ export default {
         alert(error)
       }
     },
+    connectToUser(userId) {
+      this.$router.push({
+        name: 'videoChat',
+        params: { userId }
+      })
+
+    }
   },
 }
 </script>
