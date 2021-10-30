@@ -26,7 +26,7 @@ export default {
     }
   },
   created() {
-    this.url = 'http://localhost:3000/login-room/' + this.$route.query.roomId
+    this.url = 'http://hopeful-easley-f66e09.netlify.app/login-room/?roomId=' + this.$route.query.roomId
     this.getRoomUsers(this.$route.query.roomId)
   },
   methods: {
