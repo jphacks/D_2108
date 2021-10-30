@@ -1,5 +1,5 @@
 <template>
-  <button class="rounded-xl h-14 text-2xl px-5" :style="{backgroundColor: colorCode}" @click="toggleButton">{{ text }}</button>
+  <button class="rounded-xl h-14 text-2xl px-5 button-size" :style="{backgroundColor: colorCode}" @click="toggleButton">{{ text }}</button>
 </template>
 
 <script>
@@ -22,7 +22,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .on-button {
   background-color: #ffaf08;
 }
@@ -33,5 +33,9 @@ export default {
 
 button {
   color: #f9f4df;
+}
+
+.button-size {
+  min-width: 120px;
 }
 </style>

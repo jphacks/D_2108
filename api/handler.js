@@ -48,7 +48,7 @@ module.exports.getAll = async () => {
 /**
  * 
   getRoom
-  POST /room
+  GET /room
   引数: RoomName, UserName
   返り値: RoomId
 */
@@ -137,7 +137,7 @@ module.exports.createRoom = async event => {
 /**
  * 
   getRoomInfo
-  GET /info
+  GET /users
   引数: RoomId
   返り値: [{UserName, AttendStatus, ConnectStatus}]
 */

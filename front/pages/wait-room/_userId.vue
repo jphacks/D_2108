@@ -1,39 +1,24 @@
 <template>
-  <div>
-    <p>オフライン</p>
-    <div class="flex space-x-4 ...">
-      <p>{{ url }}</p>
-      <button @click="copyUrlToClipboard(url)">コピー</button>
-      <button>QRコード</button>
+  <div class="waitroom-container w-3/5 max-w-screen-md m-auto">
+    <img src="/images/ontooff.png" alt="おんとおふ" class="m-auto lg:h-48 product-name-img">
+    <p class="text-2xl user-name mx-8">{{ $route.query.userName }}</p>
+    <div class="flex space-x-4 py-12">
+      <input type="text" :value="url" onfocus="this.select();" class="border-4 url-text rounded-xl p-2 flex-grow">
+      <Button text="コピー" color-code="#58340e" @toggleButton="copyUrlToClipboard()" />
     </div>
-    <ul>
-      <li v-for="user in users" :key="user.UserId">
-        <div>
-          <OnUserBlock
-            v-if="user.AttendStatus === true"
-            :name="user.UserName"
-          />
-          <OffUserBlock v-else :name="user.UserName" />
-        </div>
-      </li>
-    </ul>
+    <div v-for="user in users" :key="user.UserId">
+      <UserCard :user-name="user.UserName" :status="user.AttendStatus" :connect-status="user.ConnectStatus" class="card-border mb-2" />
+    </div>
     <button>終了</button>
     <button @click="getRoomUsers($route.query.id)">更新</button>
   </div>
 </template>
 
 <script>
-import OffUserBlock from '~/components/OffUserBlock.vue'
-import OnUserBlock from '~/components/OnUserBlock.vue'
-
 export default {
   modules: [
-    // Using package name
     '@nuxtjs/axios',
-    // Inline definition
-    function () {},
   ],
-  components: { OffUserBlock, OnUserBlock },
   data() {
     return {
       url: ``,
@@ -46,8 +31,8 @@ export default {
   },
   methods: {
     // 入室用URLをクリップボードにコピー
-    copyUrlToClipboard(text) {
-      navigator.clipboard.writeText(text).catch((e) => {})
+    copyUrlToClipboard() {
+      navigator.clipboard.writeText(this.url).catch((e) => {})
     },
     // 入室しているUserのパラメータを取得
     async getRoomUsers(roomId) {
@@ -66,3 +51,21 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.url-text, .card-border {
+  border-color: #58340e;
+}
+
+.user-name {
+  color: #58340e;
+  font-weight: bold;
+  border-bottom: #58340e 2px solid;
+}
+
+.waitroom-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+</style>

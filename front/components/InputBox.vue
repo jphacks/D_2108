@@ -1,7 +1,7 @@
 <template>
   <div class="inputbox-container box-content m-auto pb-4 rounded-xl h-20 w-72">
     <p class="title text-2xl p-2">{{ title }}</p>
-    <input :value="inputText" @input="$emit('input', $event.target.value)" type="text" class="text-center rounded-md h-8" placeholder="テキストを入力">
+    <input :value="inputText" type="text" class="text-center rounded-md h-8" placeholder="テキストを入力" @input="$emit('input', $event.target.value)">
   </div>
 </template>
 

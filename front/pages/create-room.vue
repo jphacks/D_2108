@@ -55,4 +55,11 @@ export default {
 .createroom-container .product-name-img {
   max-height: 20vh;
 }
+
+.createroom-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
 </style>

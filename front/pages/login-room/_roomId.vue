@@ -86,7 +86,7 @@ export default {
       this.$router.push({
         name: 'wait-room-userId',
         params: { userId },
-        query: { roomId: this.$route.params.roomId }
+        query: { roomId: this.$route.params.roomId, userName: this.userName }
       })
     },
   },
@@ -96,5 +96,12 @@ export default {
 <style>
 .loginroom-container h1 {
   color: #656565;
+}
+
+.loginroom-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 </style>
