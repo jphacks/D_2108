@@ -84,7 +84,7 @@ module.exports.getRoom = async event => {
 /**
  * 
   createRoom
-  GET /room
+  POST /room
   引数: RoomName, UserName
   返り値: RoomId
 */
@@ -92,10 +92,13 @@ module.exports.createRoom = async event => {
   const { RoomName, UserName } = JSON.parse(event.body);
   const { v4: uuidv4 } = require('uuid');
   const RoomId = uuidv4();
+  const UserId = uuidv4();
+
   const Users = [{
+    "UserId": UserId,
+    "UserName": UserName,
     "AttendStatus": true,
     "ConnectStatus": false,
-    "UserName": UserName
   }];
 
   const params = {
@@ -108,14 +111,19 @@ module.exports.createRoom = async event => {
   }
 
   try {
-    const result = await dynamo.put(params).promise();
+    await dynamo.put(params).promise();
+    const newData = {
+      "RoomId": RoomId,
+      "UserId": UserId
+    };
     return {
       statusCode: 200,
       headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Credentials': true,
+        'Access-Control-Allow-Origin': '*',
+        'Access-Controll-Allow-Methods': "POST",
+        'Access-Controll-Allow-Headers': "Content-Type",
       },
-      body: JSON.stringify(result.Item.RoomId)
+      body: JSON.stringify(newData)
     };
   } catch (error) {
     return {
@@ -145,7 +153,6 @@ module.exports.getRoomInfo = async event => {
 
   try {
     const result = await dynamo.get(params).promise();
-    // const resultItem = JSON.stringify(result.Item).Users;
     return {
       statusCode: 200,
       headers: {
@@ -171,11 +178,14 @@ module.exports.getRoomInfo = async event => {
 */
 module.exports.addUser = async event => {
   const { RoomId, UserName, AttendStatus } = JSON.parse(event.body);
+  const { v4: uuidv4 } = require('uuid');
+  const userId = uuidv4();
 
   const newUser = [{
-   "UserName": UserName,
-   "AttendStatus": AttendStatus, 
-   "ConnectStatus": false,
+    "UserId": userId,
+    "UserName": UserName,
+    "AttendStatus": AttendStatus, 
+    "ConnectStatus": false,
   }]
 
   const params = {
@@ -195,7 +205,10 @@ module.exports.addUser = async event => {
   }
 
   try {
-    const result = await dynamo.update(params).promise();
+    await dynamo.update(params).promise();
+    const newUserId = {
+      "UserId": userId
+    };
     return {
       statusCode: 200,
       headers: {
@@ -203,7 +216,7 @@ module.exports.addUser = async event => {
       'Access-Controll-Allow-Methods': "PUT",
       'Access-Controll-Allow-Headers': "Content-Type",
       },
-      body: JSON.stringify(result)
+      body: JSON.stringify(newUserId)
     };
   } catch (error) {
     return {
