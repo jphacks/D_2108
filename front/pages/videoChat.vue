@@ -17,7 +17,17 @@ if (process.browser) {
 }
 export default {
   name: 'Helloworld',
-  mounted() {
+  methods: {
+    generation(offId) {
+      const { RtcTokenBuilder, RtcRole } = require('agora-access-token')
+      const appID = process.env.NUXT_ENV_APP_ID
+      const appCertificate = process.env.NUXT_ENV_CERTIFICATE
+      const uid = Math.floor(Math.random() * 4096)
+      const role = RtcRole.PUBLISHER
+      const expirationTimeInSeconds = 3600
+      const currentTimestamp = Math.floor(Date.now() / 1000)
+      const privilegeExpiredTs = currentTimestamp + expirationTimeInSeconds
+      const tokenA = RtcTokenBuilder.buildTokenWithUid(appID,appCertificate,offId,uid,role,privilegeExpiredTs)
     const client = AgoraRTC.createClient({
       mode: 'rtc',
       codec: 'vp8',
@@ -28,9 +38,9 @@ export default {
     })
     client.init(process.env.NUXT_ENV_APP_ID)
     client.join(
-      process.env.NUXT_ENV_TOKEN,
-      process.env.NUXT_ENV_CHANNEL,
-      Math.floor(Math.random() * 256),
+      tokenA,
+      offId,
+      uid,
       () => {
         localStream.init(() => {
           localStream.play('me')
@@ -60,6 +70,7 @@ export default {
       },
       handleError
     )
+    },
   },
 }
 const handleError = function (err) {
