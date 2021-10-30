@@ -90,8 +90,7 @@ export default {
         })
       } else {
         this.$router.push({
-          name: 'wait-room-userId',
-          params: { userId },
+          name: 'wait-room',
           query: { roomId: this.$route.query.roomId, userName: this.userName }
         })
       }
