@@ -27,7 +27,7 @@ export default {
             UserName: this.inputUserName,
             RoomName: this.inputRoomName
           });
-          this.toWaitRoom(response);
+          this.toWaitRoom(response.UserId, response.RoomId);
       } catch (error) {
         return {
           statusCode: error
