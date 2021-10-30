@@ -9,7 +9,7 @@
     <div v-else>
       <h1 class="text-5xl pb-10">{{ roomName }}</h1>
       <img src="/images/touhu.png" alt="とうふ" class="m-auto max-w-xl mb-10">
-      <InputBox ref="inputBox" v-model="inputText" title="あなたの名前" class="mb-10" />
+      <InputBox v-model="inputText" title="あなたの名前" class="mb-10" />
       <div class="flex justify-around">
         <AttendButton text="オフラインで参加" :attend-value=false @toggleButton="toggleAttendButton" />
         <AttendButton text="オンラインで参加" :attend-value=true @toggleButton="toggleAttendButton" />
