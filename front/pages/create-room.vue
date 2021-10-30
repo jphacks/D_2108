@@ -1,12 +1,14 @@
 <template>
-  <div class="createroom-container w-3/5 max-w-screen-md">
-    <img src="/images/ontooff.png" alt="おんとおふ" class="m-auto lg:h-48 product-name-img">
-    <img src="/images/touhu.png" alt="とうふ" class="m-auto mb-10">
-    <div class="flex justify-around inputbox-wrapper">
-      <InputBox v-model="inputUserName" title="あなたの名前" class="mb-10 max-w-full" />
-      <InputBox v-model="inputRoomName" title="部屋の名前" class="mb-10 max-w-full" />
-    </div>
+  <div class="createroom-container">
+    <div class="w-3/5 max-w-screen-md">
+     <img src="/images/ontooff.png" alt="おんとおふ" class="m-auto lg:h-48 product-name-img">
+     <img src="/images/touhu.png" alt="とうふ" class="m-auto mb-10">
+     <div class="flex justify-around inputbox-wrapper">
+       <InputBox v-model="inputUserName" title="あなたの名前" class="mb-10 max-w-full" />
+       <InputBox v-model="inputRoomName" title="部屋の名前" class="mb-10 max-w-full" />
+     </div>
     <Button text="作成" color-code="#478633" class="px-20" @toggleButton="createRoom" />
+    </div>
   </div>
 </template>
 

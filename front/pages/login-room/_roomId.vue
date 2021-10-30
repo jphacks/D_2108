@@ -86,7 +86,7 @@ export default {
       if(attendStatus) {
         this.$router.push({
           name: 'videoChat',
-          params: { userId }
+          query: { offId: "33169bda-51eb-46ae-9484-97c7a1118ce5" }
         })
       } else {
         this.$router.push({

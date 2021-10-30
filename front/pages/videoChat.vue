@@ -17,16 +17,19 @@ if (process.browser) {
 }
 export default {
   mounted(){
-      const { RtcTokenBuilder, RtcRole } = require('agora-access-token')
-      const appID = process.env.NUXT_ENV_APP_ID
-      const appCertificate = process.env.NUXT_ENV_CERTIFICATE
+      // const { RtcTokenBuilder, RtcRole } = require('agora-access-token')
+      // const appID = process.env.NUXT_ENV_APP_ID
+      // const appCertificate = process.env.NUXT_ENV_CERTIFICATE
       const uid = Math.floor(Math.random() * 4096)
-      const role = RtcRole.PUBLISHER
-      const offId = this.$route.params.offId
-      const expirationTimeInSeconds = 3600
-      const currentTimestamp = Math.floor(Date.now() / 1000)
-      const privilegeExpiredTs = currentTimestamp + expirationTimeInSeconds
-      const tokenA = RtcTokenBuilder.buildTokenWithUid(appID,appCertificate,offId,uid,role,privilegeExpiredTs)
+      // const role = RtcRole.PUBLISHER
+      const offId = 'itoka-room' // this.$route.query.offId
+      // const expirationTimeInSeconds = 3600
+      // const currentTimestamp = Math.floor(Date.now() / 1000)
+      // const privilegeExpiredTs = currentTimestamp + expirationTimeInSeconds
+      // const tokenA = RtcTokenBuilder.buildTokenWithUid(appID,appCertificate,offId,uid,role,privilegeExpiredTs)
+const tokenA='006b67a3df743d346189e951056e6de5133IACOhVVTAU/HuY4Y9/8curJhlf4uApqquCzugMJxMeHQZNDGb0oAAAAAEADJD5AXvgh+YQEAAQC9CH5h'
+
+ 
     const client = AgoraRTC.createClient({
       mode: 'rtc',
       codec: 'vp8',

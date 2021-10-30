@@ -4,7 +4,7 @@
       <img :src="image_src" :alt="image_alt" class="h-full">
     </div>
     <p class="flex-grow text-2xl text-left pl-4 pt-2">{{ userName }}</p>
-    <Button v-if="!connectStatus && status" text="接続" :color-code="colorCode" />
+    <Button v-if="!connectStatus && status" text="接続" :color-code="colorCode" @toggleButton="toggleConnectButton" />
   </div>
 </template>
 
@@ -34,6 +34,11 @@ export default {
   computed: {
     colorCode() {
       return "#ffaf08";
+    }
+  },
+  methods: {
+    toggleConnectButton() {
+      this.$emit('toConnectButton')
     }
   }
 }
