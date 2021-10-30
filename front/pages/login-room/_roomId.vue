@@ -19,7 +19,6 @@
 </template>
 
 <script>
-import videoChatVue from '../videoChat.vue';
 export default {
   modules: ['@nuxtjs/axios'],
 

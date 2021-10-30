@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div class="video-container">
     <h1>
       Video Call<br><small style="font-size: 14pt;">Powered by Agora.io</small>
     </h1>
@@ -16,14 +16,13 @@ if (process.browser) {
   AgoraRTC = require('agora-rtc-sdk')
 }
 export default {
-  name: 'Helloworld',
   mounted(){
       const { RtcTokenBuilder, RtcRole } = require('agora-access-token')
       const appID = process.env.NUXT_ENV_APP_ID
       const appCertificate = process.env.NUXT_ENV_CERTIFICATE
       const uid = Math.floor(Math.random() * 4096)
       const role = RtcRole.PUBLISHER
-      const offId = $route.params.offId
+      const offId = this.$route.params.offId
       const expirationTimeInSeconds = 3600
       const currentTimestamp = Math.floor(Date.now() / 1000)
       const privilegeExpiredTs = currentTimestamp + expirationTimeInSeconds
@@ -72,7 +71,7 @@ export default {
     )
     },
   }
-}
+
 const handleError = function (err) {
   alert('Error: ', err)
 }
