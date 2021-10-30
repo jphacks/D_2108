@@ -17,13 +17,13 @@ if (process.browser) {
 }
 export default {
   name: 'Helloworld',
-  methods: {
-    generation(offId) {
+  mounted(){
       const { RtcTokenBuilder, RtcRole } = require('agora-access-token')
       const appID = process.env.NUXT_ENV_APP_ID
       const appCertificate = process.env.NUXT_ENV_CERTIFICATE
       const uid = Math.floor(Math.random() * 4096)
       const role = RtcRole.PUBLISHER
+      const offId = $route.params.offId
       const expirationTimeInSeconds = 3600
       const currentTimestamp = Math.floor(Date.now() / 1000)
       const privilegeExpiredTs = currentTimestamp + expirationTimeInSeconds
@@ -71,7 +71,7 @@ export default {
       handleError
     )
     },
-  },
+  }
 }
 const handleError = function (err) {
   alert('Error: ', err)
