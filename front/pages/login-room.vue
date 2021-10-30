@@ -69,6 +69,13 @@ export default {
       }
     },
     toggleAttendButton(status) {
+      this.$router.push({
+        path: '/wait-room',
+        query: { roomId: this.$route.query.roomId, userName: this.userName }
+      })
+      return
+
+
       const roomId = this.$route.query.roomId;
       const userName = this.inputText;
       const attendStatus = status;
@@ -90,7 +97,7 @@ export default {
         })
       } else {
         this.$router.push({
-          name: 'wait-room',
+          path: '/wait-room',
           query: { roomId: this.$route.query.roomId, userName: this.userName }
         })
       }
