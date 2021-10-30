@@ -7,7 +7,7 @@
       <Button text="コピー" color-code="#58340e" @toggleButton="copyUrlToClipboard" />
     </div>
     <div v-for="user in users" :key="user.UserId">
-      <UserCard :user-name="user.UserName" :status="user.AttendStatus" :connect-status="user.ConnectStatus" @toggleButton="connectToUser(user.UserId)" class="card-border mb-2" />
+      <UserCard :user-name="user.UserName" :status="user.AttendStatus" :connect-status="user.ConnectStatus" class="card-border mb-2"  @toggleButton="connectToUser(user.UserId)"/>
     </div>
     <button>終了</button>
     <button @click="getRoomUsers($route.query.id)">更新</button>
