@@ -31,7 +31,7 @@ export default {
     }
   },
   async created() {
-    await this.getRoomName(this.$route.params.roomId);
+    await this.getRoomName(this.$route.query.roomId);
   },
   methods: {
     // 部屋名を取得する
@@ -69,7 +69,7 @@ export default {
       }
     },
     toggleAttendButton(status) {
-      const roomId = this.$route.params.roomId;
+      const roomId = this.$route.query.roomId;
       const userName = this.inputText;
       const attendStatus = status;
       if (userName === "") {
@@ -92,7 +92,7 @@ export default {
         this.$router.push({
           name: 'wait-room-userId',
           params: { userId },
-          query: { roomId: this.$route.params.roomId, userName: this.userName }
+          query: { roomId: this.$route.query.roomId, userName: this.userName }
         })
       }
     },
